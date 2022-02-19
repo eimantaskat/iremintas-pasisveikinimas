@@ -8,19 +8,32 @@ using std::string;
 
 int main() {
     string name;
-    string greeting_line;
+    string framed_greeting;
+    string greeting;
+    int width;
 
     cout << "Iveskite varda: ";
     cin >> name;
+    cout << "Iveskite remelio ploti: ";
+    cin >> width;
     
     if(name.back() == 'e' || name.back() == 'a') {
-        greeting_line = "* Sveika, " + name + "! *\n";
+        greeting = ("Sveika, " + name + "!");
     } else {
-        greeting_line = "* Sveikas, " + name + "! *\n";
+        greeting = "Sveikas, " + name + "!";
     }
 
-    string horizontal_line = string(greeting_line.length() - 1, '*') + '\n';
-    string vertical_line = "*" + string(greeting_line.length() - 3, ' ') + "*\n";
-    
-    cout << horizontal_line << vertical_line << greeting_line << vertical_line << horizontal_line;
+    try {
+        string greeting_line = "*" + string((width - 2 - greeting.length()) / 2, ' ') + greeting;
+        greeting_line += string(width - greeting_line.length() - 1, ' ') + "*\n";
+
+        cout << string(greeting_line.length() - 1, '*') + '\n'
+        << "*" + string(greeting_line.length() - 3, ' ') + "*\n"
+        << greeting_line
+        << "*" + string(greeting_line.length() - 3, ' ') + "*\n"
+        << string(greeting_line.length() - 1, '*') + '\n';
+    } catch (std::bad_alloc) {
+        cout << "Pasisveikinimas netelpa i remeli";
+        return 1;
+    }
 }
